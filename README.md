@@ -109,5 +109,4 @@ if ('serviceWorker' in navigator) {
 
 The Service Worker will cache the CSS files and serve them when offline.
 
->>>>>>> beee00b (commit)
 
