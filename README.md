@@ -1,25 +1,41 @@
+
 # 🚀 Rocket-UI
+
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Rocket--UI-blue?logo=github)](https://github.com/Anmol-rocket/Rocket-UI)
 
 A next-generation, modular CSS framework for building modern, responsive, and accessible web interfaces. Rocket-UI provides a comprehensive set of components, utilities, and theming options to accelerate your development workflow.
 
+---
+
+## 🚀 CDN Usage (jsDelivr)
+
+You can use Rocket-UI directly from the jsDelivr CDN for fast, reliable delivery and automatic caching:
+
+### Import via CDN
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/_base.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/index.css">
+```
+
+### Enable Offline Caching
+To cache Rocket-UI CSS files for offline use, add the provided Service Worker:
+
+1. Add this file to your project (or use via CDN):
+```html
+<script src="https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/rocket-ui-sw.js"></script>
+```
+2. Register the Service Worker in your main JS file:
+```javascript
+if ('serviceWorker' in navigator) {
+   navigator.serviceWorker.register('rocket-ui-sw.js');
+}
+```
+
+The Service Worker will cache the CSS files and serve them when offline.
+
+---
 
 ## Table of Contents
-
-
-## Features
-
-
-## Getting Started
-
-1. **Clone the repository:**
-   ```sh
-   git clone <your-repo-url>
-   cd library
-   ```
-2. **Open in VS Code:**
-   Open the project folder in Visual Studio Code for best experience.
-3. **Preview the documentation site:**
-   Open `docs/index.html` in your browser to explore all features and demos.
 
 
 ## Folder Structure
@@ -62,32 +78,6 @@ library/
 ```
 
 
-## Components
-Rocket-UI includes:
-
-
-## Utilities
-Utility classes for:
-
-
-## Theming
-
-
-## Accessibility
-
-
-## Documentation Site
-
-
-## Contributing
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes
-4. Push and open a pull request
-
-
-## License
-MIT License
 
 
 ## Credits
