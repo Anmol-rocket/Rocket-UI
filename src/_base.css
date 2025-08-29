@@ -1,0 +1,41 @@
+/* Rocket-UI Base Styles & Resets */
+/* Box sizing reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+/* Set base font and background */
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: var(--line-height-base);
+}
+
+/* Remove list styles */
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* Anchor defaults */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
+/* Button & input resets */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}

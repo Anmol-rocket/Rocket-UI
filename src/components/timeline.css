@@ -1,0 +1,35 @@
+/* Rocket-UI Timeline Component */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 1.5em;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-muted);
+}
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+.timeline-marker {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: var(--color-primary);
+  position: absolute;
+  left: 1em;
+  top: 0.5em;
+}
+.timeline-content {
+  margin-left: 3em;
+}

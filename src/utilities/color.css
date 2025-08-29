@@ -1,0 +1,12 @@
+/* Rocket-UI Color Utilities */
+
+.bg-primary { background: var(--color-primary); color: #fff; }
+.bg-secondary { background: var(--color-secondary); color: #fff; }
+.bg-success { background: var(--color-success); color: #fff; }
+.bg-danger { background: var(--color-danger); color: #fff; }
+.bg-warning { background: var(--color-warning); color: #1e293b; }
+.bg-info { background: var(--color-info); color: #fff; }
+.bg-bg { background: var(--color-bg); color: var(--color-text); }
+.bg-surface { background: var(--color-surface); color: var(--color-text); }
+.bg-muted { background: var(--color-muted); color: #fff; }
+.bg-transparent { background: transparent; }

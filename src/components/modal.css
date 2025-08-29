@@ -1,0 +1,48 @@
+/* Rocket-UI Modal Component */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30,41,59,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-dialog {
+  background: var(--color-bg);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+  padding: var(--space-lg);
+  max-width: 90vw;
+  min-width: 300px;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: var(--color-muted);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.modal-close:hover, .modal-close:focus-visible {
+  background: var(--color-surface);
+  color: var(--color-danger);
+}

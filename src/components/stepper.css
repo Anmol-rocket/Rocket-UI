@@ -1,0 +1,44 @@
+/* Rocket-UI Stepper Component */
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+.step {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.step-indicator {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-md);
+}
+.step.active .step-indicator {
+  background: var(--color-primary);
+  color: #fff;
+}
+.step-completed .step-indicator {
+  background: var(--color-success);
+  color: #fff;
+}
+.step-label {
+  margin-left: var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+.step:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 2em;
+  height: 2px;
+  background: var(--color-muted);
+  margin-left: var(--space-sm);
+}

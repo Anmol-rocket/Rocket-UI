@@ -1,0 +1,161 @@
+/* Rocket-UI Form Component */
+
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-muted);
+  border-radius: 0.375rem;
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+  outline: none;
+}
+
+.form-input:invalid, .form-select:invalid, .form-textarea:invalid {
+  border-color: var(--color-danger);
+}
+
+.form-input:valid, .form-select:valid, .form-textarea:valid {
+  border-color: var(--color-success);
+}
+
+.form-input[disabled], .form-select[disabled], .form-textarea[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Checkbox & Radio */
+.form-checkbox, .form-radio {
+  accent-color: var(--color-primary);
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: middle;
+  margin-right: var(--space-xs);
+}
+
+/* Custom Checkbox & Radio (for advanced styling) */
+.form-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Error message */
+.form-error {
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+  margin-top: var(--space-xs);
+}
+
+/* Input group */
+.input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+.input-group > .form-input,
+.input-group > .form-select,
+.input-group > .form-textarea {
+  flex: 1 1 auto;
+  border-radius: 0.375rem 0 0 0.375rem;
+}
+.input-group > .input-group-text,
+.input-group > .input-group-btn {
+  display: flex;
+  align-items: center;
+  padding: 0 1em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-muted);
+  border-radius: 0 0.375rem 0.375rem 0;
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+}
+
+/* Custom Checkbox */
+.form-checkbox-custom {
+  appearance: none;
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid var(--color-muted);
+  border-radius: 0.25em;
+  background: var(--color-bg);
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  cursor: pointer;
+}
+.form-checkbox-custom:checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+}
+.form-checkbox-custom:checked::after {
+  content: '';
+  position: absolute;
+  left: 0.35em;
+  top: 0.15em;
+  width: 0.3em;
+  height: 0.6em;
+  border: solid #fff;
+  border-width: 0 0.2em 0.2em 0;
+  transform: rotate(45deg);
+}
+
+/* Custom Radio */
+.form-radio-custom {
+  appearance: none;
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid var(--color-muted);
+  border-radius: 50%;
+  background: var(--color-bg);
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  cursor: pointer;
+}
+.form-radio-custom:checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+}
+.form-radio-custom:checked::after {
+  content: '';
+  position: absolute;
+  left: 0.35em;
+  top: 0.35em;
+  width: 0.4em;
+  height: 0.4em;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* Rich Select Dropdown */
+.form-select-rich {
+  background: var(--color-bg);
+  border: 1px solid var(--color-primary);
+  color: var(--color-text);
+  border-radius: 0.375rem;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-md);
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2364748b" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75em center;
+  background-size: 1em;
+}

@@ -1,0 +1,29 @@
+/* Rocket-UI Progress Bar Component */
+
+.progress {
+  width: 100%;
+  background: var(--color-surface);
+  border-radius: 0.375rem;
+  overflow: hidden;
+  height: 1rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.4s ease;
+  border-radius: 0.375rem 0 0 0.375rem;
+}
+
+.progress-bar-success {
+  background: var(--color-success);
+}
+.progress-bar-danger {
+  background: var(--color-danger);
+}
+.progress-bar-warning {
+  background: var(--color-warning);
+}
+.progress-bar-info {
+  background: var(--color-info);
+}

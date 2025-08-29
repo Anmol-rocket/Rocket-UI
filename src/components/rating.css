@@ -1,0 +1,18 @@
+/* Rocket-UI Rating Component */
+
+.rating {
+  display: flex;
+  gap: 0.25em;
+}
+.rating-star {
+  font-size: var(--font-size-lg);
+  color: var(--color-warning);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.rating-star.filled {
+  color: var(--color-warning);
+}
+.rating-star.empty {
+  color: var(--color-muted);
+}

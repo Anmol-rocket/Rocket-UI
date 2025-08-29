@@ -1,0 +1,63 @@
+/* Rocket-UI Navbar Component */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-surface);
+}
+
+.navbar-brand {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.navbar-menu {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.navbar-link {
+  color: var(--color-text);
+  font-size: var(--font-size-md);
+  text-decoration: none;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 0.375rem;
+  transition: background 0.2s;
+}
+.navbar-link:hover, .navbar-link:focus-visible {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar-menu {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-md);
+    background: var(--color-bg);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  }
+  .navbar-menu.active {
+    display: flex;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+}

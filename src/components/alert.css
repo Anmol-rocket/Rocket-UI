@@ -1,0 +1,109 @@
+/* Rocket-UI Alert Component */
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--space-md);
+  border-radius: 0.375rem;
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--color-muted);
+  background: var(--color-surface);
+  color: var(--color-text);
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* Contexts */
+.alert-success {
+  border-color: var(--color-success);
+  background: #e6f9ed;
+  color: var(--color-success);
+}
+.alert-danger {
+  border-color: var(--color-danger);
+  background: #fdeaea;
+  color: var(--color-danger);
+}
+.alert-warning {
+  border-color: var(--color-warning);
+  background: #fff7e6;
+  color: var(--color-warning);
+}
+.alert-info {
+  border-color: var(--color-info);
+  background: #e6f4fa;
+  color: var(--color-info);
+}
+
+/* Icon */
+.alert-icon {
+  margin-right: var(--space-md);
+  font-size: 1.5em;
+  flex-shrink: 0;
+}
+
+/* Close button */
+.alert-close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: 1.25em;
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.alert-close:hover, .alert-close:focus-visible {
+  background: var(--color-surface);
+  color: var(--color-danger);
+}
+
+/* Outlined variant */
+.alert-outline {
+  background: transparent;
+  border-width: 2px;
+}
+
+/* Shadow variant */
+.alert-shadow {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+/* Compact variant */
+.alert-compact {
+  padding: var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+
+/* Icon positioning */
+.alert-icon-left {
+  margin-right: var(--space-md);
+}
+.alert-icon-right {
+  margin-left: var(--space-md);
+}
+
+/* Dismissible animation */
+.alert-dismiss {
+  animation: alert-fade 0.3s ease forwards;
+}
+@keyframes alert-fade {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+/* Accessibility: role and aria-live */
+[role="alert"], .alert[role="alert"] {
+  aria-live: assertive;
+}
+
+/* Focus ring for close button */
+.alert-close:focus-visible {
+  outline: 2px solid var(--color-info);
+  outline-offset: 2px;
+}

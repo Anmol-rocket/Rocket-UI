@@ -1,0 +1,54 @@
+/* Rocket-UI Accessibility Helpers */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+.focus-visible {
+  outline: 2px solid var(--color-info);
+  outline-offset: 2px;
+}
+.aria-live {
+  /* Use with [aria-live] attribute */
+  background: var(--color-warning);
+  color: var(--color-text);
+  padding: var(--space-xs);
+  border-radius: 0.25em;
+}
+.aria-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.skip-link {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-xs) var(--space-md);
+  z-index: 2000;
+  transform: translateY(-100%);
+  transition: transform 0.2s;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+.outline-none {
+  outline: none !important;
+}

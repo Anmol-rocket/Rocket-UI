@@ -1,0 +1,8 @@
+/* Rocket-UI Aspect Ratio Utilities */
+
+.aspect-1-1 { aspect-ratio: 1 / 1; }
+.aspect-16-9 { aspect-ratio: 16 / 9; }
+.aspect-4-3 { aspect-ratio: 4 / 3; }
+.aspect-3-2 { aspect-ratio: 3 / 2; }
+.aspect-2-1 { aspect-ratio: 2 / 1; }
+.aspect-auto { aspect-ratio: auto; }

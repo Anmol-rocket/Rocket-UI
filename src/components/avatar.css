@@ -1,0 +1,34 @@
+/* Rocket-UI Avatar Component */
+
+.avatar {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--color-muted);
+  color: #fff;
+  font-size: var(--font-size-lg);
+  text-align: center;
+  line-height: 2.5rem;
+}
+.avatar-lg {
+  width: 4rem;
+  height: 4rem;
+  font-size: var(--font-size-xl);
+  line-height: 4rem;
+}
+.avatar-sm {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: var(--font-size-md);
+  line-height: 1.5rem;
+}
+.avatar-group {
+  display: flex;
+  align-items: center;
+}
+.avatar-group .avatar {
+  margin-left: -1rem;
+  border: 2px solid var(--color-bg);
+}

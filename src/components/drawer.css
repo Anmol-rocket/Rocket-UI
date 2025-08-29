@@ -1,0 +1,39 @@
+/* Rocket-UI Drawer/Sidebar Component */
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 320px;
+  background: var(--color-bg);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+  z-index: 1200;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+.drawer.active {
+  transform: translateX(0);
+}
+.drawer-header {
+  padding: var(--space-md);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--color-surface);
+}
+.drawer-content {
+  padding: var(--space-md);
+}
+.drawer-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+.drawer-close:hover, .drawer-close:focus-visible {
+  color: var(--color-danger);
+}

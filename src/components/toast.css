@@ -1,0 +1,36 @@
+/* Rocket-UI Toast Notification Component */
+
+.toast {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  min-width: 220px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: 0.375rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  padding: var(--space-md) var(--space-lg);
+  z-index: 1100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  transform: translateY(20px);
+}
+.toast.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.toast-success {
+  border-left: 4px solid var(--color-success);
+}
+.toast-danger {
+  border-left: 4px solid var(--color-danger);
+}
+.toast-warning {
+  border-left: 4px solid var(--color-warning);
+}
+.toast-info {
+  border-left: 4px solid var(--color-info);
+}

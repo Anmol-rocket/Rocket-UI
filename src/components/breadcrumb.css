@@ -1,0 +1,25 @@
+/* Rocket-UI Breadcrumb Component */
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.breadcrumb-item {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.breadcrumb-item:hover, .breadcrumb-item:focus-visible {
+  color: var(--color-success);
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: var(--color-muted);
+  margin: 0 0.25em;
+}

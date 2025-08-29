@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rocket-UI - Modern CSS Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <style>
+    #home.hero {
+      display: flex;
+    }
+    /* Sidebar styles */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 320px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 2000;
+      overflow-y: auto;
+      transition: width 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+      padding: 2rem 1rem 2rem 1rem;
+    }
+    .sidebar.closed {
+      width: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+      overflow: hidden !important;
+    }
+    .main-content.full {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin: 0 !important;
+      padding: 4rem 2rem !important;
+      box-sizing: border-box;
+      transition: width 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+      z-index: 100;
+    }
+    #showSidebarBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 3000;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .sidebar-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar-list li {
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-list a {
+      display: block;
+      color: var(--muted-foreground);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .sidebar-list a:hover, .sidebar-list a.active {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+    @media (max-width: 1024px) {
+      .sidebar {
+        left: -270px;
+      }
+      .sidebar.open {
+        left: 0;
+      }
+      .sidebar-toggle {
+        display: block;
+      }
+    }
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 90px;
+      left: 16px;
+      z-index: 1001;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    @media (max-width: 1024px) {
+      .main-content {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+      }
+      .sidebar {
+        left: -270px;
+      }
+      .sidebar.open {
+        left: 0;
+      }
+      .sidebar-toggle {
+        display: block;
+      }
+    }
+    @media (min-width: 1025px) {
+      body {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-areas: "sidebar main";
+      }
+      .sidebar {
+        grid-area: sidebar;
+        position: sticky;
+        top: 80px;
+        left: 0;
+        height: calc(100vh - 80px);
+        width: 100%;
+        max-width: none;
+      }
+      .main-content {
+        grid-area: main;
+        margin-left: 0;
+        padding-left: 0;
+        width: 100%;
+        max-width: none;
+      }
+    }
+    :root {
+      --background: #0a0a0a;
+      --surface: #1a1a1a;
+      --surface-elevated: #2a2a2a;
+      --foreground: #ffffff;
+      --muted-foreground: #a1a1aa;
+      --primary: #059669;
+      --primary-foreground: #ffffff;
+      --secondary: #10b981;
+      --accent: #22d3ee;
+      --border: #27272a;
+      --ring: rgba(16, 185, 129, 0.3);
+      --radius: 0.75rem;
+      --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--background);
+      color: var(--foreground);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--surface);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--secondary);
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: rgba(26, 26, 26, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted-foreground);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, rgba(5, 150, 105, 0.1) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--muted-foreground);
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    .btn-primary:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      transform: translateY(-2px);
+    }
+
+    /* Floating elements */
+    .floating-element {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .floating-element:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+      top: 60%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+
+    .floating-element:nth-child(3) {
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    /* Main content */
+    .main-content {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-bottom: 6rem;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      text-align: center;
+      color: var(--primary);
+    }
+
+    /* Component cards */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .component-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .component-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .component-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary);
+    }
+
+    .component-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .component-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+
+    .component-preview {
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background: var(--surface-elevated);
+      border-radius: calc(var(--radius) - 4px);
+      border: 1px solid var(--border);
+    }
+
+    /* Code snippet container */
+    .code-container {
+      position: relative;
+      margin-top: 1rem;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      background: var(--surface-elevated);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius) var(--radius) 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+    }
+
+    .code-title {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      font-weight: 500;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted-foreground);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-left: auto;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border-color: var(--primary);
+    }
+
+    .copy-btn.copied {
+      background: var(--secondary);
+      color: var(--primary-foreground);
+      border-color: var(--secondary);
+    }
+
+    pre {
+      margin: 0;
+      background: var(--background) !important;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 1rem !important;
+      overflow-x: auto;
+      font-size: 0.875rem;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    /* Component styles for demos */
+    .demo-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: 0.25rem;
+    }
+
+    .demo-btn-primary { background: var(--primary); color: white; }
+    .demo-btn-secondary { background: var(--secondary); color: white; }
+    .demo-btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+    .demo-btn:hover { transform: translateY(-1px); }
+
+    .demo-alert {
+      padding: 1rem;
+      border-radius: 6px;
+      margin: 0.5rem 0;
+      border-left: 4px solid;
+    }
+
+    .demo-alert-success { background: rgba(16, 185, 129, 0.1); border-color: var(--secondary); color: var(--secondary); }
+    .demo-alert-danger { background: rgba(239, 68, 68, 0.1); border-color: #ef4444; color: #ef4444; }
+    .demo-alert-warning { background: rgba(245, 158, 11, 0.1); border-color: #f59e0b; color: #f59e0b; }
+    .demo-alert-info { background: rgba(34, 211, 238, 0.1); border-color: var(--accent); color: var(--accent); }
+
+    .demo-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .demo-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin: 0.25rem;
+    }
+
+    .demo-badge-primary { background: var(--primary); color: white; }
+    .demo-badge-secondary { background: var(--secondary); color: white; }
+    .demo-badge-accent { background: var(--accent); color: black; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero h1 {
+        font-size: 3rem;
+      }
+      
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    /* Scroll animations */
+    .scroll-animate {
+      /* Remove opacity: 0 and transform so content is always visible */
+      transition: all 0.6s ease;
+    }
+
+    .scroll-animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  
+  <button id="showSidebarBtn">Show Sidebar</button>
+  <!-- Sidebar Toggle Button (mobile) -->
+  <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+  <header class="header">
+    <div class="logo">ROCKET-UI</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#components">Components</a></li>
+        <li><a href="#utilities">Utilities</a></li>
+        <li><a href="#docs">Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar">
+  <div class="sidebar-title">Documentation</div>
+    <ul class="sidebar-list">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#utilities">Utilities</a></li>
+      <li><a href="#docs">Docs</a></li>
+      <li style="margin:1rem 0 0 0;font-weight:700;color:var(--primary);">Component List</li>
+      <li><a href="#button">Button</a></li>
+      <li><a href="#alert">Alert</a></li>
+      <li><a href="#card">Card</a></li>
+      <li><a href="#badge">Badge</a></li>
+      <li><a href="#form">Form</a></li>
+      <li><a href="#modal">Modal</a></li>
+      <li><a href="#accordion">Accordion</a></li>
+      <li><a href="#avatar">Avatar</a></li>
+      <li><a href="#breadcrumb">Breadcrumb</a></li>
+      <li><a href="#carousel">Carousel</a></li>
+      <li><a href="#chat">Chat</a></li>
+      <li><a href="#divider">Divider</a></li>
+      <li><a href="#drawer">Drawer</a></li>
+      <li><a href="#dropdown">Dropdown</a></li>
+      <li><a href="#file-upload">File Upload</a></li>
+      <li><a href="#grid">Grid</a></li>
+      <li><a href="#list-group">List Group</a></li>
+      <li><a href="#navbar">Navbar</a></li>
+      <li><a href="#notification-center">Notification Center</a></li>
+      <li><a href="#pagination">Pagination</a></li>
+      <li><a href="#progress">Progress</a></li>
+      <li><a href="#rating">Rating</a></li>
+      <li><a href="#skeleton">Skeleton</a></li>
+      <li><a href="#stepper">Stepper</a></li>
+      <li><a href="#table">Table</a></li>
+      <li><a href="#tabs">Tabs</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#toast">Toast</a></li>
+      <li><a href="#tooltip">Tooltip</a></li>
+      <li style="margin:1rem 0 0 0;font-weight:700;color:var(--primary);">Utilities List</li>
+      <li><a href="#spacing">Spacing</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#display">Display</a></li>
+      <li><a href="#colors">Colors</a></li>
+    </ul>
+  </nav>
+  <header class="header">
+    <div class="logo">🚀 ROCKET-UI</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#components">Components</a></li>
+        <li><a href="#utilities">Utilities</a></li>
+        <li><a href="#docs">Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home" style="width:70vw;max-width:70vw;position:relative;left:30vw;">
+    <div class="floating-element">🚀</div>
+    <div class="floating-element">⚡</div>
+    <div class="floating-element">✨</div>
+    <div class="hero-content">
+      <h1>ROCKET-UI</h1>
+      <p>The most advanced CSS library for building modern, responsive, and accessible web interfaces. Launch your projects to new heights with our comprehensive component system.</p>
+      <div class="hero-buttons">
+        <a href="#components" class="btn btn-primary">Explore Components</a>
+        <button id="openSidebar" class="btn btn-outline">Docs</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+  <!-- Documentation Section -->
+  <section class="section scroll-animate" id="docs">
+    <h2 class="section-title">Documentation</h2>
+    <div style="max-width:800px;margin:0 auto;text-align:left;">
+      <h3>Introduction</h3>
+      <p>Rocket-UI is a modern CSS library for building responsive, accessible, and beautiful web interfaces. It provides a rich set of components and utilities to speed up your development workflow.</p>
+      <h3>How to Use (CDN)</h3>
+      <h4>CDN Import</h4>
+      <p>Include the following CDN links in your HTML <code>&lt;head&gt;</code> to use Rocket-UI instantly:</p>
+      <pre><code class="language-html">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/_base.css"&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/index.css"&gt;
+&lt;script src="https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/rocket-ui-sw.js"&gt;&lt;/script&gt;</code></pre>
+      <h4>Automatic Caching (Offline Support)</h4>
+      <p>To enable offline caching of Rocket-UI CSS files, use the provided Service Worker. It will cache the CDN files and serve them when offline:</p>
+      <pre><code class="language-javascript">// rocket-ui-sw.js
+const CACHE_NAME = 'rocket-ui-cache-v1';
+const FILES_TO_CACHE = [
+  'https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/_base.css',
+  'https://cdn.jsdelivr.net/gh/Anmol-rocket/Rocket-UI@main/src/index.css'
+];
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+  );
+});
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
+});
+</code></pre>
+      <p>Register the Service Worker in your main JS file:</p>
+      <pre><code class="language-javascript">if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('rocket-ui-sw.js');
+}
+</code></pre>
+      <h4>Usage</h4>
+      <p>Apply the provided classes to your HTML elements. For example, to create a button:</p>
+      <pre><code class="language-html">&lt;button class="btn btn-primary"&gt;Click Me&lt;/button&gt;</code></pre>
+      <h4>Customization</h4>
+      <p>Override CSS variables or add your own styles to customize the look and feel. Refer to the <b>Utilities</b> section for available utility classes.</p>
+      <h4>Example</h4>
+      <pre><code class="language-html">&lt;div class="card"&gt;
+  &lt;h3&gt;Card Title&lt;/h3&gt;
+  &lt;p&gt;Card content goes here.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Components Section -->
+  <section class="section scroll-animate" id="components">
+      <h2 class="section-title">Components</h2>
+      
+  <div class="component-grid">
+  <!-- Button Component -->
+  <div class="component-card" id="button">
+          <h3 class="component-title">Button</h3>
+          <div class="component-preview">
+            <button class="demo-btn demo-btn-primary">Primary</button>
+            <button class="demo-btn demo-btn-secondary">Secondary</button>
+            <button class="demo-btn demo-btn-outline">Outline</button>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn-outline"&gt;Outline&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Alert Component -->
+  <div class="component-card" id="alert">
+          <h3 class="component-title">Alert</h3>
+          <div class="component-preview">
+            <div class="demo-alert demo-alert-success">Success alert message</div>
+            <div class="demo-alert demo-alert-danger">Danger alert message</div>
+            <div class="demo-alert demo-alert-warning">Warning alert message</div>
+            <div class="demo-alert demo-alert-info">Info alert message</div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="alert alert-success"&gt;Success alert&lt;/div&gt;
+&lt;div class="alert alert-danger"&gt;Danger alert&lt;/div&gt;
+&lt;div class="alert alert-warning"&gt;Warning alert&lt;/div&gt;
+&lt;div class="alert alert-info"&gt;Info alert&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Card Component -->
+  <div class="component-card" id="card">
+          <h3 class="component-title">Card</h3>
+          <div class="component-preview">
+            <div class="demo-card">
+              <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Card Title</h4>
+              <p style="color: var(--muted-foreground); margin: 0;">This is a card component with header and content.</p>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;Card Title&lt;/div&gt;
+  &lt;div class="card-body"&gt;Card content goes here&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Badge Component -->
+  <div class="component-card" id="badge">
+          <h3 class="component-title">Badge</h3>
+          <div class="component-preview">
+            <span class="demo-badge demo-badge-primary">Primary</span>
+            <span class="demo-badge demo-badge-secondary">Secondary</span>
+            <span class="demo-badge demo-badge-accent">Accent</span>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;span class="badge badge-primary"&gt;Primary&lt;/span&gt;
+&lt;span class="badge badge-secondary"&gt;Secondary&lt;/span&gt;
+&lt;span class="badge badge-accent"&gt;Accent&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Form Component -->
+  <div class="component-card" id="form">
+          <h3 class="component-title">Form</h3>
+          <div class="component-preview">
+            <form style="display: flex; flex-direction: column; gap: 1rem;">
+              <input type="text" placeholder="Enter your name" style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-elevated); color: var(--foreground);">
+              <select style="padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-elevated); color: var(--foreground);">
+                <option>Choose option</option>
+                <option>Option 1</option>
+                <option>Option 2</option>
+              </select>
+              <button type="submit" class="demo-btn demo-btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;form class="form"&gt;
+  &lt;input type="text" class="form-input" placeholder="Enter text"&gt;
+  &lt;select class="form-select"&gt;
+    &lt;option&gt;Choose option&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;button type="submit" class="btn btn-primary"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Modal Component -->
+  <div class="component-card" id="modal">
+          <h3 class="component-title">Modal</h3>
+          <div class="component-preview">
+            <button class="demo-btn demo-btn-primary" onclick="alert('Modal would open here')">Open Modal</button>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="modal open"&gt;
+  &lt;div class="modal-content"&gt;
+    &lt;div class="modal-header"&gt;Modal Title&lt;/div&gt;
+    &lt;div class="modal-body"&gt;Modal content&lt;/div&gt;
+    &lt;div class="modal-footer"&gt;
+      &lt;button class="btn btn-primary"&gt;Save&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Accordion Component -->
+  <div class="component-card" id="accordion">
+          <h3 class="component-title">Accordion</h3>
+          <div class="component-preview">
+            <div style="background: var(--surface-elevated); border-radius: 8px;">
+              <button class="demo-btn demo-btn-primary" style="width:100%;text-align:left;">Section 1</button>
+              <div style="padding:1rem;">Content for section 1</div>
+              <button class="demo-btn demo-btn-secondary" style="width:100%;text-align:left;">Section 2</button>
+              <div style="padding:1rem;">Content for section 2</div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="accordion"&gt;
+  &lt;button class="accordion-header"&gt;Section 1&lt;/button&gt;
+  &lt;div class="accordion-body"&gt;Content 1&lt;/div&gt;
+  &lt;button class="accordion-header"&gt;Section 2&lt;/button&gt;
+  &lt;div class="accordion-body"&gt;Content 2&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Avatar Component -->
+  <div class="component-card" id="avatar">
+          <h3 class="component-title">Avatar</h3>
+          <div class="component-preview">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" style="width:48px;height:48px;border-radius:50%;margin-right:1rem;">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" style="width:64px;height:64px;border-radius:12px;">
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;img src="avatar.jpg" class="avatar" alt="Avatar"&gt;
+&lt;img src="avatar.jpg" class="avatar avatar-lg" alt="Avatar Large"&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Breadcrumb Component -->
+  <div class="component-card" id="breadcrumb">
+          <h3 class="component-title">Breadcrumb</h3>
+          <div class="component-preview">
+            <nav style="display:flex;align-items:center;gap:0.5rem;">
+              <a href="#" style="color:var(--primary);">Home</a>
+              <span>/</span>
+              <a href="#" style="color:var(--primary);">Library</a>
+              <span>/</span>
+              <span style="color:var(--muted-foreground);">Data</span>
+            </nav>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;nav class="breadcrumb"&gt;
+  &lt;a href="#"&gt;Home&lt;/a&gt;
+  &lt;span&gt;/&lt;/span&gt;
+  &lt;a href="#"&gt;Library&lt;/a&gt;
+  &lt;span&gt;/&lt;/span&gt;
+  &lt;span&gt;Data&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Carousel Component -->
+  <div class="component-card" id="carousel">
+          <h3 class="component-title">Carousel</h3>
+          <div class="component-preview" style="display:flex;gap:1rem;">
+            <img src="https://via.placeholder.com/300x150?text=Slide+1" alt="Slide 1" style="border-radius:8px;">
+            <img src="https://via.placeholder.com/300x150?text=Slide+2" alt="Slide 2" style="border-radius:8px;">
+            <img src="https://via.placeholder.com/300x150?text=Slide+3" alt="Slide 3" style="border-radius:8px;">
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="carousel"&gt;
+  &lt;img src="https://via.placeholder.com/300x150?text=Slide+1" alt="Slide 1"&gt;
+  &lt;img src="https://via.placeholder.com/300x150?text=Slide+2" alt="Slide 2"&gt;
+  &lt;img src="https://via.placeholder.com/300x150?text=Slide+3" alt="Slide 3"&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Chat Component -->
+  <div class="component-card" id="chat">
+          <h3 class="component-title">Chat</h3>
+          <div class="component-preview">
+            <div style="display:flex;flex-direction:column;gap:1rem;">
+              <div style="background:var(--surface-elevated);padding:1rem;border-radius:8px;">
+                <strong style="color:var(--primary);">User</strong>
+                <p style="margin:0;">Hello, how can I help you?</p>
+              </div>
+              <div style="background:var(--primary);color:white;padding:1rem;border-radius:8px;">
+                <strong>Support</strong>
+                <p style="margin:0;">I have a question about my order.</p>
+              </div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="chat"&gt;
+  &lt;div class="chat-message"&gt;
+    &lt;strong&gt;User&lt;/strong&gt;
+    &lt;p&gt;Hello, how can I help you?&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="chat-message chat-message-support"&gt;
+    &lt;strong&gt;Support&lt;/strong&gt;
+    &lt;p&gt;I have a question about my order.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Divider Component -->
+  <div class="component-card" id="divider">
+          <h3 class="component-title">Divider</h3>
+          <div class="component-preview">
+            <div style="padding:1rem;background:var(--surface-elevated);border-radius:8px;">
+              <p style="margin:0;">Content above the divider</p>
+              <div style="height:1px;background:var(--border);margin:0.5rem 0;"></div>
+              <p style="margin:0;">Content below the divider</p>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="divider"&gt;
+  &lt;p&gt;Content above&lt;/p&gt;
+  &lt;div class="divider-line"&gt;&lt;/div&gt;
+  &lt;p&gt;Content below&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Drawer Component -->
+  <div class="component-card" id="drawer">
+          <h3 class="component-title">Drawer</h3>
+          <div class="component-preview">
+            <button class="demo-btn demo-btn-primary" onclick="alert('Drawer would open')">Open Drawer</button>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="drawer open"&gt;
+  &lt;div class="drawer-content"&gt;
+    &lt;h3&gt;Drawer Title&lt;/h3&gt;
+    &lt;p&gt;Drawer content goes here&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Dropdown Component -->
+  <div class="component-card" id="dropdown">
+          <h3 class="component-title">Dropdown</h3>
+          <div class="component-preview">
+            <div style="position:relative;">
+              <button class="demo-btn demo-btn-primary" style="width:100%;">Dropdown Button</button>
+              <div style="position:absolute;top:100%;left:0;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);z-index:100;">
+                <a href="#" style="display:block;padding:0.75rem;color:var(--primary);text-decoration:none;">Action 1</a>
+                <a href="#" style="display:block;padding:0.75rem;color:var(--primary);text-decoration:none;">Action 2</a>
+              </div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="dropdown"&gt;
+  &lt;button class="dropdown-toggle"&gt;Dropdown Button&lt;/button&gt;
+  &lt;div class="dropdown-menu"&gt;
+    &lt;a href="#"&gt;Action 1&lt;/a&gt;
+    &lt;a href="#"&gt;Action 2&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- File Upload Component -->
+  <div class="component-card" id="file-upload">
+          <h3 class="component-title">File Upload</h3>
+          <div class="component-preview">
+            <div style="border:2px dashed var(--primary);border-radius:8px;padding:2rem;text-align:center;">
+              <p style="color:var(--muted-foreground);margin:0;">Drag and drop your files here</p>
+              <button class="demo-btn demo-btn-primary" style="margin-top:1rem;">Upload Files</button>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="file-upload"&gt;
+  &lt;p&gt;Drag and drop your files here&lt;/p&gt;
+  &lt;button class="btn btn-primary"&gt;Upload Files&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Grid Component -->
+  <div class="component-card" id="grid">
+          <h3 class="component-title">Grid</h3>
+          <div class="component-preview">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+              <div style="background:var(--primary);color:white;padding:1rem;border-radius:8px;">Grid Item 1</div>
+              <div style="background:var(--secondary);color:white;padding:1rem;border-radius:8px;">Grid Item 2</div>
+              <div style="background:var(--accent);color:black;padding:1rem;border-radius:8px;">Grid Item 3</div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="grid"&gt;
+  &lt;div class="grid-item"&gt;Item 1&lt;/div&gt;
+  &lt;div class="grid-item"&gt;Item 2&lt;/div&gt;
+  &lt;div class="grid-item"&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- List Group Component -->
+  <div class="component-card" id="list-group">
+          <h3 class="component-title">List Group</h3>
+          <div class="component-preview">
+            <div style="background:var(--surface-elevated);border-radius:8px;">
+              <a href="#" style="display:block;padding:0.75rem;color:var(--primary);text-decoration:none;">Item 1</a>
+              <a href="#" style="display:block;padding:0.75rem;color:var(--primary);text-decoration:none;">Item 2</a>
+              <a href="#" style="display:block;padding:0.75rem;color:var(--primary);text-decoration:none;">Item 3</a>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="list-group"&gt;
+  &lt;a href="#" class="list-group-item"&gt;Item 1&lt;/a&gt;
+  &lt;a href="#" class="list-group-item"&gt;Item 2&lt;/a&gt;
+  &lt;a href="#" class="list-group-item"&gt;Item 3&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Navbar Component -->
+  <div class="component-card" id="navbar">
+          <h3 class="component-title">Navbar</h3>
+          <div class="component-preview">
+            <div style="background:var(--surface-elevated);border-radius:8px;padding:1rem;">
+              <a href="#" style="margin-right:1rem;color:var(--primary);text-decoration:none;">Home</a>
+              <a href="#" style="margin-right:1rem;color:var(--primary);text-decoration:none;">About</a>
+              <a href="#" style="color:var(--primary);text-decoration:none;">Contact</a>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="navbar"&gt;
+  &lt;a href="#" class="navbar-item"&gt;Home&lt;/a&gt;
+  &lt;a href="#" class="navbar-item"&gt;About&lt;/a&gt;
+  &lt;a href="#" class="navbar-item"&gt;Contact&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Notification Center Component -->
+  <div class="component-card" id="notification-center">
+          <h3 class="component-title">Notification Center</h3>
+          <div class="component-preview">
+            <div style="position:relative;">
+              <button class="demo-btn demo-btn-primary" style="width:100%;">Open Notifications</button>
+              
+              <div style="position:absolute;top:100%;left:0;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);z-index:100;">
+                <div style="padding:0.75rem;border-bottom:1px solid var(--border);">
+                  <strong style="color:var(--primary);">Notifications</strong>
+                </div>
+                <a href="#" style="display:block;padding:0.75rem;color:var(--primary);text-decoration:none;">Notification 1</a>
+                <a href="#" style="display:block;padding:0.75rem;color:var(--primary);text-decoration:none;">Notification 2</a>
+              </div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="notification-center"&gt;
+  &lt;button class="notification-toggle"&gt;Open Notifications&lt;/button&gt;
+  &lt;div class="notification-list"&gt;
+    &lt;a href="#" class="notification-item"&gt;Notification 1&lt;/a&gt;
+    &lt;a href="#" class="notification-item"&gt;Notification 2&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Pagination Component -->
+  <div class="component-card" id="pagination">
+          <h3 class="component-title">Pagination</h3>
+          <div class="component-preview">
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+              <button class="demo-btn demo-btn-primary" style="padding:0.5rem 1rem;">&#10094;</button>
+              <span style="color:var(--muted-foreground);">Page 1 of 10</span>
+              <button class="demo-btn demo-btn-primary" style="padding:0.5rem 1rem;">&#10095;</button>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="pagination"&gt;
+  &lt;button class="btn btn-primary"&gt;Previous&lt;/button&gt;
+  &lt;span class="page-info"&gt;Page 1 of 10&lt;/span&gt;
+  &lt;button class="btn btn-primary"&gt;Next&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Progress Component -->
+  <div class="component-card" id="progress">
+          <h3 class="component-title">Progress</h3>
+          <div class="component-preview">
+            <div style="background:var(--surface-elevated);border-radius:8px;padding:1rem;">
+              <div style="height:8px;width:70%;background:var(--primary);border-radius:var(--radius);"></div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="progress"&gt;
+  &lt;div class="progress-bar" style="width:70%;"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Rating Component -->
+  <div class="component-card" id="rating">
+          <h3 class="component-title">Rating</h3>
+          <div class="component-preview">
+            <div style="display:flex;gap:0.25rem;">
+              <span style="color:var(--primary);font-size:1.5rem;">&#9733;</span>
+              <span style="color:var(--primary);font-size:1.5rem;">&#9733;</span>
+              <span style="color:var(--primary);font-size:1.5rem;">&#9733;</span>
+              <span style="color:var(--muted-foreground);font-size:1.5rem;">&#9733;</span>
+              <span style="color:var(--muted-foreground);font-size:1.5rem;">&#9733;</span>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="rating"&gt;
+  &lt;span class="star filled"&gt;&#9733;&lt;/span&gt;
+  &lt;span class="star filled"&gt;&#9733;&lt;/span&gt;
+  &lt;span class="star filled"&gt;&#9733;&lt;/span&gt;
+  &lt;span class="star"&gt;&#9733;&lt;/span&gt;
+  &lt;span class="star"&gt;&#9733;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Skeleton Component -->
+  <div class="component-card" id="skeleton">
+          <h3 class="component-title">Skeleton</h3>
+          <div class="component-preview">
+            <div style="background:var(--surface-elevated);border-radius:8px;padding:1rem;">
+              <div style="height:20px;background:rgba(255,255,255,0.1);border-radius:4px;margin-bottom:0.5rem;"></div>
+              <div style="height:20px;width:70%;background:rgba(255,255,255,0.1);border-radius:4px;"></div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="skeleton"&gt;
+  &lt;div class="skeleton-line"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-line" style="width:70%;"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Stepper Component -->
+  <div class="component-card" id="stepper">
+          <h3 class="component-title">Stepper</h3>
+          <div class="component-preview">
+            <div style="display:flex;align-items:center;gap:1rem;">
+              <div style="width:24px;height:24px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;">1</div>
+              <div style="height:2px;width:100%;background:var(--border);"></div>
+              <div style="width:24px;height:24px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;">2</div>
+              <div style="height:2px;width:100%;background:var(--border);"></div>
+              <div style="width:24px;height:24px;background:var(--muted-foreground);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="stepper"&gt;
+  &lt;div class="step active"&gt;1&lt;/div&gt;
+  &lt;div class="step active"&gt;2&lt;/div&gt;
+  &lt;div class="step"&gt;3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Table Component -->
+  <div class="component-card" id="table">
+          <h3 class="component-title">Table</h3>
+          <div class="component-preview">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead>
+                <tr style="background:var(--surface);">
+                  <th style="padding:0.75rem;text-align:left;border-bottom:1px solid var(--border);">Header 1</th>
+                  <th style="padding:0.75rem;text-align:left;border-bottom:1px solid var(--border);">Header 2</th>
+                  <th style="padding:0.75rem;text-align:left;border-bottom:1px solid var(--border);">Header 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background:white;">
+                  <td style="padding:0.75rem;border-bottom:1px solid var(--border);">Row 1, Cell 1</td>
+                  <td style="padding:0.75rem;border-bottom:1px solid var(--border);">Row 1, Cell 2</td>
+                  <td style="padding:0.75rem;border-bottom:1px solid var(--border);">Row 1, Cell 3</td>
+                </tr>
+                <tr style="background:var(--surface-elevated);">
+                  <td style="padding:0.75rem;border-bottom:1px solid var(--border);">Row 2, Cell 1</td>
+                  <td style="padding:0.75rem;border-bottom:1px solid var(--border);">Row 2, Cell 2</td>
+                  <td style="padding:0.75rem;border-bottom:1px solid var(--border);">Row 2, Cell 3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;table class="table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Header 1&lt;/th&gt;
+      &lt;th&gt;Header 2&lt;/th&gt;
+      &lt;th&gt;Header 3&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Row 1, Cell 1&lt;/td&gt;
+      &lt;td&gt;Row 1, Cell 2&lt;/td&gt;
+      &lt;td&gt;Row 1, Cell 3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Row 2, Cell 1&lt;/td&gt;
+      &lt;td&gt;Row 2, Cell 2&lt;/td&gt;
+      &lt;td&gt;Row 2, Cell 3&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Tabs Component -->
+  <div class="component-card" id="tabs">
+          <h3 class="component-title">Tabs</h3>
+          <div class="component-preview">
+            <div style="display:flex;gap:1rem;">
+              <button class="demo-btn demo-btn-primary" style="flex:1;">Tab 1</button>
+              <button class="demo-btn demo-btn-secondary" style="flex:1;">Tab 2</button>
+              <button class="demo-btn demo-btn-secondary" style="flex:1;">Tab 3</button>
+            </div>
+            <div style="padding:1rem;background:var(--surface-elevated);border-radius:8px;margin-top:0.5rem;">
+              <p style="margin:0;">Content for the selected tab will be displayed here.</p>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="tabs"&gt;
+  &lt;button class="tab active"&gt;Tab 1&lt;/button&gt;
+  &lt;button class="tab"&gt;Tab 2&lt;/button&gt;
+  &lt;button class="tab"&gt;Tab 3&lt;/button&gt;
+  
+  &lt;div class="tab-content"&gt;
+    &lt;p&gt;Content for the selected tab&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Timeline Component -->
+  <div class="component-card" id="timeline">
+          <h3 class="component-title">Timeline</h3>
+          <div class="component-preview">
+            <div style="position:relative;padding-left:2rem;">
+              <div style="position:absolute;left:0;top:0;width:8px;height:8px;background:var(--primary);border-radius:50%;"></div>
+              <div style="padding:1rem 0 1rem 2.5rem;background:var(--surface-elevated);border-radius:8px;margin-bottom:1rem;">
+                <strong style="color:var(--primary);">Event 1</strong>
+                <p style="margin:0;">Description for event 1.</p>
+              </div>
+              
+              <div style="position:absolute;left:0;top:50%;width:8px;height:8px;background:var(--primary);border-radius:50%;"></div>
+              <div style="padding:1rem 0 1rem 2.5rem;background:var(--surface-elevated);border-radius:8px;margin-bottom:1rem;">
+                <strong style="color:var(--primary);">Event 2</strong>
+                <p style="margin:0;">Description for event 2.</p>
+              </div>
+              
+              <div style="position:absolute;left:0;top:100%;width:8px;height:8px;background:var(--muted-foreground);border-radius:50%;"></div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="timeline"&gt;
+  &lt;div class="timeline-event"&gt;
+    &lt;div class="timeline-marker"&gt;&lt;/div&gt;
+    &lt;div class="timeline-content"&gt;
+      &lt;strong&gt;Event 1&lt;/strong&gt;
+      &lt;p&gt;Description for event 1.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="timeline-event"&gt;
+    &lt;div class="timeline-marker"&gt;&lt;/div&gt;
+    &lt;div class="timeline-content"&gt;
+      &lt;strong&gt;Event 2&lt;/strong&gt;
+      &lt;p&gt;Description for event 2.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Toast Component -->
+  <div class="component-card" id="toast">
+          <h3 class="component-title">Toast</h3>
+          <div class="component-preview">
+            <div style="position:relative;">
+              <div style="background:var(--surface-elevated);border-radius:8px;padding:1rem;margin-bottom:1rem;">
+                <strong style="color:var(--primary);">Toast Title</strong>
+                <p style="margin:0;">This is a toast message.</p>
+              </div>
+              
+              <button class="demo-btn demo-btn-primary" style="position:absolute;top:0;right:0;">&#10006;</button>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="toast"&gt;
+  &lt;div class="toast-content"&gt;
+    &lt;strong&gt;Toast Title&lt;/strong&gt;
+    &lt;p&gt;This is a toast message.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;button class="toast-close"&gt;&amp;times;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Tooltip Component -->
+  <div class="component-card" id="tooltip">
+          <h3 class="component-title">Tooltip</h3>
+          <div class="component-preview">
+            <div style="position:relative;">
+              <button class="demo-btn demo-btn-primary">Hover me</button>
+              
+              <div style="position:absolute;top:100%;left:50%;transform:translate(-50%,0);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0.5rem;margin-top:0.5rem;white-space:nowrap;">
+                Tooltip text goes here
+              </div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">HTML</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="tooltip"&gt;
+  &lt;button class="tooltip-target"&gt;Hover me&lt;/button&gt;
+  &lt;div class="tooltip-content"&gt;Tooltip text goes here&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+  </div>
+    </section>
+
+    <!-- Utilities Section -->
+    <section class="section scroll-animate" id="utilities">
+      <h2 class="section-title">Utilities</h2>
+      
+  <div class="component-grid">
+  <!-- Spacing Utilities -->
+  <div class="component-card" id="spacing">
+          <h3 class="component-title">Spacing</h3>
+          <div class="component-preview">
+            <div style="background: var(--primary); padding: 1rem; margin: 1rem 0; border-radius: 4px; color: white;">Margin & Padding</div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">CSS Classes</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="m-4"&gt;Margin 4&lt;/div&gt;
+&lt;div class="p-4"&gt;Padding 4&lt;/div&gt;
+&lt;div class="mx-auto"&gt;Margin X Auto&lt;/div&gt;
+&lt;div class="py-2"&gt;Padding Y 2&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Text Utilities -->
+  <div class="component-card" id="typography">
+          <h3 class="component-title">Typography</h3>
+          <div class="component-preview">
+            <div style="text-align: center; margin: 0.5rem 0;">Centered Text</div>
+            <div style="font-weight: bold; margin: 0.5rem 0;">Bold Text</div>
+            <div style="color: var(--primary); margin: 0.5rem 0;">Primary Color</div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">CSS Classes</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="text-center"&gt;Centered&lt;/div&gt;
+&lt;div class="text-bold"&gt;Bold&lt;/div&gt;
+&lt;div class="text-primary"&gt;Primary Color&lt;/div&gt;
+&lt;div class="text-lg"&gt;Large Text&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Display Utilities -->
+  <div class="component-card" id="display">
+          <h3 class="component-title">Display</h3>
+          <div class="component-preview">
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <div style="background: var(--secondary); padding: 0.5rem; border-radius: 4px; color: white;">Flex Item 1</div>
+              <div style="background: var(--accent); padding: 0.5rem; border-radius: 4px; color: black;">Flex Item 2</div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">CSS Classes</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="flex"&gt;Flex Container&lt;/div&gt;
+&lt;div class="grid"&gt;Grid Container&lt;/div&gt;
+&lt;div class="hidden"&gt;Hidden Element&lt;/div&gt;
+&lt;div class="block"&gt;Block Element&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+
+  <!-- Color Utilities -->
+  <div class="component-card" id="colors">
+          <h3 class="component-title">Colors</h3>
+          <div class="component-preview">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 4px;"></div>
+              <div style="width: 40px; height: 40px; background: var(--secondary); border-radius: 4px;"></div>
+              <div style="width: 40px; height: 40px; background: var(--accent); border-radius: 4px;"></div>
+            </div>
+          </div>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">CSS Classes</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code class="language-html">&lt;div class="bg-primary"&gt;Primary Background&lt;/div&gt;
+&lt;div class="bg-secondary"&gt;Secondary Background&lt;/div&gt;
+&lt;div class="text-accent"&gt;Accent Text&lt;/div&gt;
+&lt;div class="border-primary"&gt;Primary Border&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const closeSidebarBtn = document.getElementById('closeSidebar');
+      const sidebar = document.getElementById('sidebar');
+      closeSidebarBtn.addEventListener('click', function() {
+        sidebar.classList.add('closed');
+        if (mainContent) mainContent.classList.add('full');
+      });
+    });
+    // Copy to clipboard functionality
+    function copyCode(button) {
+      const codeBlock = button.closest('.code-container').querySelector('code');
+      const text = codeBlock.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+        
+        setTimeout(() => {
+          button.textContent = 'Copy';
+          button.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.scroll-animate').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Tooltip functionality
+    document.querySelectorAll('[data-tooltip]').forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        let tip = document.createElement('div');
+        tip.className = 'tooltip-popup';
+        tip.textContent = el.getAttribute('data-tooltip');
+        document.body.appendChild(tip);
+        const rect = el.getBoundingClientRect();
+        tip.style.position = 'absolute';
+        tip.style.left = rect.left + window.scrollX + 'px';
+        tip.style.top = (rect.top + window.scrollY - tip.offsetHeight - 8) + 'px';
+        tip.style.background = '#222';
+        tip.style.color = '#fff';
+        tip.style.padding = '4px 10px';
+        tip.style.borderRadius = '6px';
+        tip.style.fontSize = '0.95rem';
+        tip.style.zIndex = 9999;
+        el._tip = tip;
+      });
+      el.addEventListener('mouseleave', function() {
+        if (el._tip) el._tip.remove();
+      });
+      el.addEventListener('focus', function() {
+        el.dispatchEvent(new Event('mouseenter'));
+      });
+      el.addEventListener('blur', function() {
+        el.dispatchEvent(new Event('mouseleave'));
+      });
+    });
+
+    // Rating functionality
+    document.querySelectorAll('.rating').forEach(function(rating) {
+      const stars = rating.querySelectorAll('span');
+      stars.forEach(function(star, idx) {
+        star.style.cursor = 'pointer';
+        star.addEventListener('click', function() {
+          stars.forEach((s, i) => {
+            s.textContent = i <= idx ? '★' : '☆';
+          });
+        });
+      });
+    });
+
+    // Notification Center functionality
+    document.querySelectorAll('.notification-center').forEach(function(center) {
+      center.querySelectorAll('.notification').forEach(function(note) {
+        note.style.cursor = 'pointer';
+        note.addEventListener('click', function() {
+          note.remove();
+        });
+      });
+      // Add notification demo
+      if (!center.querySelector('.add-note-btn')) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Add Notification';
+        btn.className = 'demo-btn demo-btn-primary add-note-btn';
+        btn.onclick = function() {
+          const note = document.createElement('div');
+          note.className = 'notification';
+          note.textContent = 'New notification';
+          note.style.cursor = 'pointer';
+          note.onclick = function() { note.remove(); };
+          center.appendChild(note);
+        };
+        center.appendChild(btn);
+      }
+    });
+
+    // File Upload functionality
+    document.querySelectorAll('input[type="file"]').forEach(function(input) {
+      input.addEventListener('change', function() {
+        let label = input.nextElementSibling;
+        if (!label || !label.classList.contains('file-label')) {
+          label = document.createElement('span');
+          label.className = 'file-label';
+          input.parentNode.insertBefore(label, input.nextSibling);
+        }
+        label.textContent = input.files.length ? input.files[0].name : 'No file chosen';
+      });
+    });
+
+    // Dropdown functionality
+    document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        const menu = toggle.nextElementSibling;
+        if (menu && menu.classList.contains('dropdown-menu')) {
+          menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+      });
+      document.addEventListener('click', function(e) {
+        if (!toggle.contains(e.target) && toggle.nextElementSibling && toggle.nextElementSibling.classList.contains('dropdown-menu')) {
+          toggle.nextElementSibling.style.display = 'none';
+        }
+      });
+    });
+
+    // Drawer functionality
+    document.querySelectorAll('.drawer .drawer-toggle').forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        const drawer = toggle.closest('.drawer');
+        drawer.classList.toggle('open');
+      });
+    });
+    // Sidebar open/close logic
+    // Slider button logic for sidebar
+    const sliderSidebarBtn = document.getElementById('sliderSidebarBtn');
+    sliderSidebarBtn.addEventListener('click', function() {
+      if (sidebar.classList.contains('closed')) {
+        openSidebar();
+      } else {
+        closeSidebar();
+      }
+    });
+    const openSidebarBtn = document.getElementById('openSidebar');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebarBtn = document.getElementById('closeSidebar');
+    const heroSection = document.getElementById('home');
+    const mainContent = document.querySelector('.main-content');
+    function openSidebar() {
+      sidebar.classList.remove('closed');
+      if (mainContent) mainContent.classList.remove('full');
+    }
+    function closeSidebar() {
+      sidebar.classList.add('closed');
+      if (mainContent) mainContent.classList.add('full');
+    }
+
+    openSidebarBtn.addEventListener('click', function() {
+      openSidebar();
+      heroSection.style.display = 'none';
+    });
+    closeSidebarBtn.addEventListener('click', function() {
+      closeSidebar();
+      // Optionally hide hero if needed, but main content should remain visible
+    });
+
+    // Sidebar navigation links
+    sidebar.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        if (link.getAttribute('href') === '#home') {
+          e.preventDefault();
+          closeSidebar();
+          heroSection.style.display = 'flex';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (link.getAttribute('href') === '#docs') {
+          e.preventDefault();
+          openSidebar();
+          const docsSection = document.getElementById('docs');
+          if (docsSection) {
+            docsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Ensure sidebar is open on load
+    openSidebar();
+  </script>
+</body>
+</html>

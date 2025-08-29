@@ -1,0 +1,23 @@
+/* Rocket-UI Skeleton Loader Component */
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-surface) 25%, var(--color-bg) 50%, var(--color-surface) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite linear;
+  border-radius: 0.375rem;
+  min-height: 1em;
+}
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-circle {
+  border-radius: 50%;
+}
+.skeleton-text {
+  height: 1em;
+  margin-bottom: 0.5em;
+}
+.skeleton-rect {
+  height: 2em;
+}

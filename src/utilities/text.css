@@ -1,0 +1,30 @@
+/* Rocket-UI Text Utilities */
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+.text-nowrap { white-space: nowrap; }
+.text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-lowercase { text-transform: lowercase; }
+.text-uppercase { text-transform: uppercase; }
+.text-capitalize { text-transform: capitalize; }
+.text-bold { font-weight: var(--font-weight-bold); }
+.text-normal { font-weight: var(--font-weight-normal); }
+.text-italic { font-style: italic; }
+.text-underline { text-decoration: underline; }
+.text-line-through { text-decoration: line-through; }
+.text-decoration-none { text-decoration: none; }
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-md { font-size: var(--font-size-md); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-muted { color: var(--color-muted); }
+.text-primary { color: var(--color-primary); }
+.text-success { color: var(--color-success); }
+.text-danger { color: var(--color-danger); }
+.text-warning { color: var(--color-warning); }
+.text-info { color: var(--color-info); }
+.text-bg { color: var(--color-bg); }
+.text-surface { color: var(--color-surface); }

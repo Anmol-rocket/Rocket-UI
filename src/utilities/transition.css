@@ -1,0 +1,11 @@
+/* Rocket-UI Transition Utilities */
+
+.transition { transition: all 0.2s ease; }
+.transition-fast { transition: all 0.1s ease; }
+.transition-slow { transition: all 0.4s ease; }
+.transition-none { transition: none; }
+.transition-bg { transition: background 0.2s ease; }
+.transition-color { transition: color 0.2s ease; }
+.transition-shadow { transition: box-shadow 0.2s ease; }
+.transition-transform { transition: transform 0.2s ease; }
+.transition-opacity { transition: opacity 0.2s ease; }

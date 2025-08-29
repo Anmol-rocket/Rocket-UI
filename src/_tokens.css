@@ -1,0 +1,46 @@
+/* Rocket-UI Design Tokens: Colors, Spacing, Typography */
+:root {
+  /* Colors */
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-warning: #f59e42;
+  --color-info: #0ea5e9;
+  --color-bg: #fff;
+  --color-surface: #f3f4f6;
+  --color-text: #1e293b;
+  --color-muted: #6b7280;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  /* Typography */
+  --font-family-base: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 2rem;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --line-height-base: 1.5;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-primary: #2563eb;
+  --color-secondary: #334155;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-warning: #fbbf24;
+  --color-info: #0284c7;
+  --color-bg: #1e293b;
+  --color-surface: #334155;
+  --color-text: #f3f4f6;
+  --color-muted: #94a3b8;
+}

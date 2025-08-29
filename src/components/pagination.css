@@ -1,0 +1,41 @@
+/* Rocket-UI Pagination Component */
+
+.pagination {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+}
+
+.page-item {
+  display: inline-block;
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 0.375rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--font-size-md);
+  transition: background 0.2s, color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.page-link:hover, .page-link:focus-visible {
+  background: var(--color-primary);
+  color: #fff;
+}
+.page-link.active {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: var(--font-weight-bold);
+}
+.page-link[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,38 @@
+/* Rocket-UI Carousel/Slider Component */
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+.carousel-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+.carousel-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+.carousel-btn {
+  background: var(--color-bg);
+  border: none;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  color: var(--color-primary);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.carousel-btn:hover, .carousel-btn:focus-visible {
+  background: var(--color-primary);
+  color: #fff;
+}

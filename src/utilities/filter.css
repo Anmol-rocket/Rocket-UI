@@ -1,0 +1,12 @@
+/* Rocket-UI Filter Utilities */
+
+.filter-none { filter: none; }
+.filter-blur { filter: blur(4px); }
+.filter-brightness { filter: brightness(1.2); }
+.filter-contrast { filter: contrast(1.2); }
+.filter-grayscale { filter: grayscale(1); }
+.filter-invert { filter: invert(1); }
+.filter-opacity-50 { filter: opacity(0.5); }
+.filter-sepia { filter: sepia(1); }
+.filter-saturate { filter: saturate(2); }
+.filter-drop-shadow { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
