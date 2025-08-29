@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # 🚀 Rocket-UI
 
 A next-generation, modular CSS framework for building modern, responsive, and accessible web interfaces. Rocket-UI provides a comprehensive set of components, utilities, and theming options to accelerate your development workflow.
